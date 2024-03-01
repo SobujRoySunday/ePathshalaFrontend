@@ -1,0 +1,24 @@
+# Tasks to accomplish by the DEV
+
+- Home page
+- Login page(username, password)
+- Signup page(name, email, username, password, image upload(optional))
+- Educator dashboard
+  - List of all available modules
+  - List of chapters under a module
+  - List of lessons under a module
+  - Live Preview of lessons
+  - Recorded session preview of the lessons
+  - Common search bar
+  - new module page
+  - new chapter page
+  - new lesson page(with ppt upload)
+  - Go live page with: module name, chapter name, lesson name, ppt
+  - Live page
+- Student Dashboard
+  - List of all available modules
+  - List of chapters under a module
+  - List of lessons under a module
+  - Live Preview of lessons
+  - Recorded session preview of the lessons
+  - Common search bar
