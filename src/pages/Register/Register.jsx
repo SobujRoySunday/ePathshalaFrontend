@@ -54,15 +54,26 @@ const Register = () => {
       data.append("avatar", avatar);
 
       try {
-        await fetch("http://localhost:8080/api/v1/users/register", {
-          method: "post",
-          body: data,
-        });
-        toast({
-          variant: "",
-          title: "Registered",
-          description: `Your username is ${formData.username}`,
-        });
+        const response = await fetch(
+          "http://localhost:8080/api/v1/users/register",
+          {
+            method: "post",
+            body: data,
+          }
+        );
+        if (!response.ok) {
+          toast({
+            variant: "destructive",
+            title: "Something went wrong while registering",
+            description: `Make sure you are not already registered and you are giving all the required details`,
+          });
+        } else {
+          toast({
+            variant: "",
+            title: "Registered",
+            description: `Your username is ${formData.username}`,
+          });
+        }
       } catch (error) {
         console.log(error);
         toast({
