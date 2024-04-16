@@ -3,6 +3,7 @@ import { LockClosedIcon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { PersonIcon } from "@radix-ui/react-icons";
+import { ModeToggle } from "../ModeToggle";
 
 const Header = () => {
   return (
@@ -13,7 +14,7 @@ const Header = () => {
             ePathshala
           </h3>
         </Link>
-        <div>
+        <div className="flex flex-row justify-center items-center gap-2">
           <NavLink
             to="login"
             className={({ isActive }) => `${isActive ? "hidden" : ""}`}
@@ -31,6 +32,7 @@ const Header = () => {
               <PersonIcon className="mr-2 h-4 w-4" /> Register
             </Button>
           </NavLink>
+          <ModeToggle />
         </div>
       </div>
       <Separator />

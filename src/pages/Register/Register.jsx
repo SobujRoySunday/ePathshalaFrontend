@@ -1,4 +1,4 @@
-"use client";
+import { Link } from "react-router-dom";
 
 import { useRef } from "react";
 import { useState } from "react";
@@ -52,6 +52,7 @@ const Register = () => {
       data.append("username", username);
       data.append("password", password);
       data.append("avatar", avatar);
+      data.append("userRole", "STUDENT");
 
       try {
         const response = await fetch(
@@ -95,7 +96,7 @@ const Register = () => {
   return (
     <form
       onSubmit={registerUser}
-      className="w-screen min-h-[75vh] flex justify-center items-center"
+      className="w-screen min-h-[85vh] flex justify-center items-center"
     >
       <Card className="w-[350px]">
         <CardHeader>
@@ -182,6 +183,12 @@ const Register = () => {
             ) : (
               <Button>Register</Button>
             )}
+          </div>
+          <div className="mt-4 text-center text-sm">
+            Already have an account?{" "}
+            <Link to="/login" className="underline">
+              Log in
+            </Link>
           </div>
         </CardContent>
       </Card>
