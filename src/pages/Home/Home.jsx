@@ -1,12 +1,39 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 import { Container } from "../../layouts";
-import { Button, Input, Login, Register } from "../../components";
+import { Button, Input, Loader, Login, Register } from "../../components";
 import eLearningVector from "../../assets/elearning-vector.png";
+import axios from "axios";
+import { backendURL } from "../../conf/conf";
 
 const Home = () => {
   const [login, setLogin] = useState(false);
   const [register, setRegister] = useState(false);
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const subscribe = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    axios
+      .post(`${backendURL}/news-letter`, { email })
+      .then((response) => {
+        console.log(response);
+        toast.success("Now you're subscribed to our newsletter");
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response.status === 409) {
+          toast.error("You're already subscribed to our newsletter");
+        } else if (error.response.status === 500) {
+          toast.error("Something went wrong while subscribing newsletter");
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   return (
     <Container>
@@ -42,11 +69,13 @@ const Home = () => {
             <span className="text-blue-400">Personalized and Adaptive</span>{" "}
             Teaching for better learning
           </p>
-          <form className="flex flex-col gap-5">
+          <form className="flex flex-col gap-5" onSubmit={subscribe}>
             <div className="flex flex-col gap-1">
               <Input
                 type="email"
                 placeholder="Enter your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
               <p>Get awesome offers and latest news!</p>
@@ -74,11 +103,12 @@ const Home = () => {
         </div>
       </footer>
 
-      {/* Login and Signup Boxes[conditionally rendered] */}
+      {/* Login and Signup and Loader Boxes[conditionally rendered] */}
       {login ? <Login setLogin={setLogin} setRegister={setRegister} /> : null}
       {register ? (
         <Register setRegister={setRegister} setLogin={setLogin} />
       ) : null}
+      {loading ? <Loader /> : null}
     </Container>
   );
 };

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { backendURL } from "../conf/conf";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HealthCheckProvider = ({ children }) => {
   const [isResponsive, setIsResponsive] = useState(true);
@@ -20,6 +22,7 @@ const HealthCheckProvider = ({ children }) => {
 
   return (
     <>
+      <ToastContainer />
       {children}
       {isResponsive ? null : (
         <div className="bg-red-500 text-white text-center absolute bottom-0 p-2 w-screen">
