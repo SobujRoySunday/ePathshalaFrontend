@@ -16,6 +16,24 @@ export class UtilsService {
       return false;
     }
   }
+
+  async subscribeToNewsLetter({ email }) {
+    try {
+      const response = await axios.post(`${this.serverEndpoint}/news-letter`, {
+        email,
+      });
+      return response;
+    } catch (error) {
+      if (error.response.status && error.response.status === 409) {
+        return 409;
+      } else if (error.response.status && error.response.status === 500) {
+        return 500;
+      } else {
+        console.log(error);
+        return null;
+      }
+    }
+  }
 }
 
 const utilsService = new UtilsService(backendURL);

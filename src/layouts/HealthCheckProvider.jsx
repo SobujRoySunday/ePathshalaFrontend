@@ -1,13 +1,20 @@
+// System imports
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+// custom imports
 import { Loader } from "../components";
-import utilsService from "../services/utils.service";
+import { utilsService } from "../services";
 
 const HealthCheckProvider = ({ children }) => {
+  // state to display alert if backend is non responsive
   const [isResponsive, setIsResponsive] = useState(true);
+
+  // state to maintain loading animation's display
   const [loading, setLoading] = useState(true);
 
+  // Health checking of the backend server
   useEffect(() => {
     utilsService
       .healthCheck()
