@@ -1,29 +1,36 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { backendURL } from "../conf/conf";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Loader } from "../components";
+import utilsService from "../services/utils.service";
 
 const HealthCheckProvider = ({ children }) => {
   const [isResponsive, setIsResponsive] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`${backendURL}/health-check`)
+    utilsService
+      .healthCheck()
       .then((response) => {
-        setIsResponsive(true);
-        console.log(response);
+        setIsResponsive(response);
       })
-      .catch((error) => {
-        setIsResponsive(false);
-        console.log(error);
+      .finally(() => {
+        setLoading(false);
       });
-  });
+  }, []);
 
   return (
     <>
+      {/* Toast alerts */}
       <ToastContainer />
+
+      {/* Loading animation while health checking */}
+      {loading ? <Loader /> : null}
+
+      {/* All other nested elements */}
       {children}
+
+      {/* Non-responsive backend server */}
       {isResponsive ? null : (
         <div className="bg-red-500 text-white text-center absolute bottom-0 p-2 w-screen">
           Our backend servers are non-responsive right now. Visit us later
