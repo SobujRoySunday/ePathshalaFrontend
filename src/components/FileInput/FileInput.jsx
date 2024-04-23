@@ -1,9 +1,14 @@
-/* eslint-disable react/prop-types */
+// system imports
 import { useId, useState } from "react";
+
+// custom imports
 import UploadIcon from "../../assets/upload-icon.png";
 
-const FileInput = ({ label = "", ...props }) => {
+const FileInput = ({ label = "", onChange = () => {}, ...props }) => {
+  // text to show in the file input button
   const [text, setText] = useState("Choose file");
+
+  // id for label and input
   const id = useId();
 
   return (
@@ -23,6 +28,7 @@ const FileInput = ({ label = "", ...props }) => {
         onChange={(e) => {
           if (e.target.files && e.target.files.length > 0) {
             setText(e.target.files[0].name);
+            onChange(e);
           }
         }}
         {...props}

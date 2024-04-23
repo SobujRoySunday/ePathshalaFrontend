@@ -36,10 +36,14 @@ const Home = () => {
           toast.error("Something went wrong while subscribing to newsletter");
         } else if (response === 409) {
           toast.error("You have already subscribed to our newsletter");
+          // clear email input field
+          setEmail("");
         } else if (response === 500) {
           toast.error("Server error occured while subscribing to newsletter");
         } else {
           toast.success("You're now subscribed to our newsletter");
+          // clear email input field
+          setEmail("");
         }
       })
       .finally(() => {
