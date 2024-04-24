@@ -64,7 +64,8 @@ export class AuthService {
         username,
         password,
       });
-      return response;
+      // login success
+      return response.data.data.user;
     } catch (error) {
       if (error.response.status && error.response.status === 404) {
         // user doesn't exists
@@ -72,13 +73,37 @@ export class AuthService {
       } else if (error.response.status && error.response.status === 401) {
         // wrong credentials
         return 401;
+      } else if (error.response.status && error.response.status === 500) {
+        // backend server error
+        return 500;
+      } else {
+        // something went wrong
+        return null;
       }
     }
   }
 
   // async getCurrentUser() {}
 
-  // async logout() {}
+  // function to logout an user
+  async logout() {
+    try {
+      const response = await axios.post(`${this.serviceEndpoint}/users/logout`);
+      // logout successful
+      return response;
+    } catch (error) {
+      if (error.response.status && error.response.status === 401) {
+        // already logged out
+        return 401;
+      } else if (error.response.status && error.response.status === 500) {
+        // backend server error
+        return 500;
+      } else {
+        // something went wrong
+        return null;
+      }
+    }
+  }
 }
 
 const authService = new AuthService();

@@ -4,5 +4,6 @@ import Login from "./Login/Login";
 import Register from "./Register/Register";
 import FileInput from "./FileInput/FileInput";
 import Loader from "./Loader/Loader";
+import LogoutBtn from "./LogoutBtn/LogoutBtn";
 
-export { Button, Input, Login, Register, FileInput, Loader };
+export { Button, Input, Login, Register, FileInput, Loader, LogoutBtn };

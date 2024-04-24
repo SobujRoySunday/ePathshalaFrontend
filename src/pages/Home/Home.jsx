@@ -86,6 +86,7 @@ const Home = () => {
             <span className="text-blue-400">Personalized and Adaptive</span>{" "}
             Teaching for better learning
           </p>
+
           {/* newsletter form */}
           <form className="flex flex-col gap-5" onSubmit={subscribe}>
             <div className="flex flex-col gap-1">
