@@ -10,6 +10,11 @@ Empowering Personalized and Adaptive Teaching for Holistic Student Learning Adva
 
 ### TODO
 
-- Homepage
-  - Login
-  - Create account
+- ~~Homepage~~
+  - ~~Login~~
+  - ~~Create account~~
+- Dashboard
+  - Educator
+  - Student
+- AuthLayout
+- Footer
