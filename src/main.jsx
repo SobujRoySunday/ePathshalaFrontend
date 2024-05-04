@@ -1,3 +1,9 @@
+/* 
+|*************************************|
+|               Imports               |
+|*************************************|
+*/
+
 // System imports
 import ReactDOM from "react-dom/client";
 import {
@@ -9,19 +15,58 @@ import {
 import { Provider } from "react-redux";
 import axios from "axios";
 
-// custom imports
+// Custom imports
 import "./index.css";
-import { Home } from "./pages";
-import { HealthCheckProvider } from "./layouts";
+import { EducatorDashboard, Home, StudentDashboard } from "./pages";
+import { HealthCheckProvider, AuthProvider } from "./layouts";
 import store from "./store/store";
 
-// initialization
+/* 
+|*************************************|
+|           Initialization            |
+|*************************************|
+*/
+
+// I made the withCredential option true as default as I'll have many queries which needs authentication
 axios.defaults.withCredentials = true;
+
+// Complete routes library
 const router = createBrowserRouter(
-  createRoutesFromElements(<Route path="" element={<Home />} />)
+  createRoutesFromElements(
+    <>
+      <Route
+        path="/"
+        element={
+          <AuthProvider isAuthRequired={false}>
+            <Home />
+          </AuthProvider>
+        }
+      />
+      <Route
+        path="/dashboard/educator"
+        element={
+          <AuthProvider isAuthRequired={"EDUCATOR"}>
+            <EducatorDashboard />
+          </AuthProvider>
+        }
+      />
+      <Route
+        path="/dashboard/student"
+        element={
+          <AuthProvider isAuthRequired={"STUDENT"}>
+            <StudentDashboard />
+          </AuthProvider>
+        }
+      />
+    </>
+  )
 );
 
-// rendering
+/* 
+|*************************************|
+|             Rendering               |
+|*************************************|
+*/
 ReactDOM.createRoot(document.getElementById("root")).render(
   <HealthCheckProvider>
     <Provider store={store}>

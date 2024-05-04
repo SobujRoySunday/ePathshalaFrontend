@@ -56,8 +56,9 @@ const Login = ({ setLogin, setRegister }) => {
           toast.error("Something went wrong");
         } else {
           toast.success("Login successful");
-          dispatch(login({ response }));
+          dispatch(login({ userData: response }));
           setFormData({ username: "", password: "" });
+          console.log(`/dashboard/${response.userRole.toLowerCase()}`);
           navigate(`/dashboard/${response.userRole.toLowerCase()}`);
         }
       })

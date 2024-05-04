@@ -26,6 +26,7 @@ const LogoutBtn = ({ children }) => {
           toast.error("Something went wrong");
         } else {
           dispatch(logout());
+          toast.success("Logged out successfully");
           navigate("/");
         }
       })
@@ -36,7 +37,7 @@ const LogoutBtn = ({ children }) => {
 
   return (
     <>
-      <Button onClick={logoutUser} className="bg-red-500">
+      <Button onClick={logoutUser} className="bg-red-500 border-red-500">
         {children}
       </Button>
       {loading ? <Loader /> : null}

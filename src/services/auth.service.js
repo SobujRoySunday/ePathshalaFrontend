@@ -83,7 +83,16 @@ export class AuthService {
     }
   }
 
-  // async getCurrentUser() {}
+  async getCurrentUser() {
+    try {
+      const response = await axios.get(
+        `${this.serviceEndpoint}/users/current-user`
+      );
+      return response.data.data;
+    } catch (error) {
+      return false;
+    }
+  }
 
   // function to logout an user
   async logout() {

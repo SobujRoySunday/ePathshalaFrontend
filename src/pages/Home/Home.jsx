@@ -1,16 +1,21 @@
 // System imports
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 // Custom imports
 import eLearningVector from "../../assets/elearning-vector.png";
 import { Button, Input, Loader, Login, Register } from "../../components";
 import { Container } from "../../layouts";
-import { utilsService } from "../../services";
+import { authService, utilsService } from "../../services";
+import { login, logout } from "../../store/authSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   // States to maintain login and register box's display
-  const [login, setLogin] = useState(false);
+  const [loginBox, setLogin] = useState(false);
   const [register, setRegister] = useState(false);
 
   // state to maintain loading animation's display
@@ -52,7 +57,23 @@ const Home = () => {
       });
   };
 
-  return (
+  useEffect(() => {
+    authService
+      .getCurrentUser()
+      .then((response) => {
+        if (response) {
+          dispatch(login(response));
+          navigate(`/dashboard/${response.userRole.toLowerCase()}`);
+        } else {
+          dispatch(logout());
+        }
+      })
+      .finally(() => setLoading(false));
+  }, [dispatch, navigate]);
+
+  return loading ? (
+    <Loader />
+  ) : (
     <Container>
       {/* Header/navigation */}
       <header>
@@ -123,11 +144,12 @@ const Home = () => {
       </footer>
 
       {/* Login and Signup and Loader Boxes[conditionally rendered] */}
-      {login ? <Login setLogin={setLogin} setRegister={setRegister} /> : null}
+      {loginBox ? (
+        <Login setLogin={setLogin} setRegister={setRegister} />
+      ) : null}
       {register ? (
         <Register setRegister={setRegister} setLogin={setLogin} />
       ) : null}
-      {loading ? <Loader /> : null}
     </Container>
   );
 };
