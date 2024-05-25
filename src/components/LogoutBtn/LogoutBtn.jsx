@@ -5,11 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 // custom imports
-import { Button, Loader } from "../";
 import { authService } from "../../services";
 import { logout } from "../../store/authSlice";
 
-const LogoutBtn = ({ children }) => {
+const LogoutBtn = ({ className = "", children }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,10 +36,13 @@ const LogoutBtn = ({ children }) => {
 
   return (
     <>
-      <Button onClick={logoutUser} className="bg-red-500 border-red-500">
+      <button
+        onClick={logoutUser}
+        className={`${className}`}
+        disabled={loading}
+      >
         {children}
-      </Button>
-      {loading ? <Loader /> : null}
+      </button>
     </>
   );
 };

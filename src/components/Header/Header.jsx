@@ -1,45 +1,66 @@
+/* 
+|*************************************|
+|               Imports               |
+|*************************************|
+*/
+
+// System imports
 import { useSelector } from "react-redux";
 
-import { Button, LogoutBtn } from "../../components";
+// Custom imports
+import LogoutIcon from "../../assets/logout.png";
+import AddIcon from "../../assets/plus-symbol-button.png";
+import StreamIcon from "../../assets/live.png";
+import { LogoutBtn } from "../../components";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
   const [userBox, setUserBox] = useState(false);
   const currentUser = useSelector((state) => state.userData);
-  // console.log(currentUser);
 
   return (
     <>
       {/* Header/navigation */}
       <header className="relative">
-        <nav className="flex justify-between items-center py-3">
+        <nav className="flex justify-between items-center p-2">
           <h1 className="text-2xl font-semibold italic">EdPanel</h1>
-          <ul className="flex gap-3 items-center">
-            <li>
-              <Button>Go Live</Button>
-            </li>
-            <li>
-              <Button>Add</Button>
-            </li>
-            <li>
-              <LogoutBtn>Logout</LogoutBtn>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  setUserBox(!userBox);
-                  console.log(userBox);
-                }}
-              >
-                <img
-                  src={currentUser?.avatar}
-                  alt="current user avatar"
-                  className="w-12 rounded-full"
-                />
-              </button>
-            </li>
-          </ul>
+          <div className="flex items-center gap-4">
+            <Link className="transition hover:scale-125">
+              <img
+                src={StreamIcon}
+                alt="stream button icon"
+                width={20}
+                height={20}
+              />
+            </Link>
+            <Link className="transition hover:scale-125">
+              <img src={AddIcon} alt="add button icon" width={20} height={20} />
+            </Link>
+            <LogoutBtn className="transition hover:scale-125">
+              <img
+                src={LogoutIcon}
+                alt="Logout button icon"
+                width={20}
+                height={20}
+              />
+            </LogoutBtn>
+            <button
+              onClick={() => {
+                setUserBox(!userBox);
+                console.log(userBox);
+              }}
+              className="transition hover:scale-90"
+            >
+              <img
+                src={currentUser?.avatar}
+                alt="current user avatar"
+                className="rounded-full"
+                width={50}
+                height={50}
+              />
+            </button>
+          </div>
         </nav>
         <hr />
         {/* User Box */}
